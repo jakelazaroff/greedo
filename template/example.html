@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Graph by Greedo</title>
+
+	<script src='https://www.gstatic.com/charts/loader.js'></script>
+	<script src='/greedo.js'></script>
+
+	<script>var DATA = {% raw data %};</script>
+</head>
+
+<body>
+	<div id='the_chart'></div>
+
+	<script>
+		var accum_data = greedo_accumulate(
+			DATA, //the raw data
+			'dt', //the date column
+			'code', //the column key
+			'value', //the column value
+			{'12345':true}, //filter column keys
+			5.0 //filter values below
+		);
+
+		var flattened = greedo_flatten(accum_data['accum'], accum_data['cols']);
+
+		google_draw_line(flattened, accum_data['cols'], 'the_chart', 'Errors', 1000, 600);
+	</script>
+
+</body>
+
+</html>
