@@ -1,10 +1,12 @@
-import tornado.web
-import MySQLdb
-import MySQLdb.cursors
-import json
 import datetime
 import decimal
+import json
+from os import path, listdir
 import re
+
+import MySQLdb
+import MySQLdb.cursors
+import tornado.web
 
 import settings
 
@@ -58,6 +60,12 @@ def app_execute_template(template, args):
 
 	return j
 
+class app_index(tornado.web.RequestHandler):
+	def get(self):
+		files = [path.splitext(query)[0] for query in listdir(settings.sql_dir)]
+
+		self.render('index.html', files=files)
+
 class app_data(tornado.web.RequestHandler):
 	def get(self, template):
 		j = app_execute_template(template, self.request.arguments)
@@ -77,5 +85,11 @@ class app_file(tornado.web.RequestHandler):
 		body = f.read()
 		f.close()
 
-		self.set_header('Content-Type', 'application/javascript')
+		extension = path.splitext(file_name)[1]
+
+		if extension == '.js':
+			self.set_header('Content-Type', 'application/javascript')
+		elif extension == '.css':
+			self.set_header('Content-Type', 'text/css')
+
 		self.write(body)

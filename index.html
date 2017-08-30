@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Graphs by Greedo</title>
+  <link rel="stylesheet" href="/greedo.css">
+</head>
+
+<body>
+
+  <ul>
+    {% for file in files %}
+      <li><a href="/graph/{{ file }}">{{ file }}</a></li>
+    {% end %}
+  </ul>
+
+</body>
+
+</html>

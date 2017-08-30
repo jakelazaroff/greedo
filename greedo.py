@@ -6,10 +6,13 @@ import app
 import settings
 
 HANDLERS = [
+	(r'/?', app.app_index),
+
 	(r'/data/(\w+)/?', app.app_data),
 	(r'/graph/(\w+)/?', app.app_graph),
 
 	(r'/(greedo.js)', app.app_file),
+	(r'/(greedo.css)', app.app_file),
 ]
 
 if __name__ == '__main__':
